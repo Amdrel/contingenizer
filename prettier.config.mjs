@@ -3,6 +3,8 @@
  * @type {import("prettier").Config}
  */
 export default {
-    trailingComma: "all",
+    importOrder: ["^@/(.*)$", "^[./]"],
+    printWidth: 80,
     tabWidth: 4,
+    trailingComma: "all",
 };
