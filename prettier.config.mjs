@@ -3,6 +3,6 @@
  * @type {import("prettier").Config}
  */
 export default {
-    trailingComma: 'all',
+    trailingComma: "all",
     tabWidth: 4,
 };

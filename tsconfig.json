@@ -1,15 +1,12 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "ESNext",
-    "declaration": true,
-    "rootDir": "./src/",
-    "outDir": "./dist/",
-    "strict": true,
-    "esModuleInterop": true
-  },
-  "exclude": [
-    "./node_modules/",
-    "./dist/"
-  ]
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "ESNext",
+        "declaration": true,
+        "rootDir": "./src/",
+        "outDir": "./dist/",
+        "strict": true,
+        "esModuleInterop": true
+    },
+    "exclude": ["./node_modules/", "./dist/"]
 }
