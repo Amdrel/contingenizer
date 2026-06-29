@@ -100,6 +100,7 @@ async function syncMirror(
     if (saved && saved.getTime() <= latest.getTime()) {
         return;
     }
+    //testing
 
     console.log(`Syncing mirror for ${repo.name} at: ${path}`);
     await execAsync(`git remote update`, { cwd: path });
