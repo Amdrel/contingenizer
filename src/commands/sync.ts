@@ -59,7 +59,7 @@ export async function sync(argv: string[]): Promise<void> {
         const repoExists = await stat(path, { throwIfNoEntry: false });
 
         if (repoExists) {
-            await syncMirror(path, repo);
+            await syncMirror(path, repo, config.repos[repo.name]);
         } else {
             await setupMirror(path, repo, config.token);
         }
@@ -79,15 +79,30 @@ async function setupMirror(
     repo: Repo,
     token: string,
 ): Promise<void> {
-    const url = `https://${token}@github.com/${repo.owner.login}/${repo.name}`;
-
     console.log(`Cloning new git mirror for: ${repo.name}`);
+
+    const url = `https://${token}@github.com/${repo.owner.login}/${repo.name}`;
     await execAsync(`git clone --mirror ${url} ${path}`);
 }
 
 /**
  * Sync an existing mirror that has already been setup.
  */
-async function syncMirror(path: string, repo: Repo): Promise<void> {
+async function syncMirror(
+    path: string,
+    repo: Repo,
+    timestamp: string | null,
+): Promise<void> {
+    const latest = new Date(repo.pushed_at);
+    const saved = timestamp != null ? new Date(timestamp) : null;
+
+    if (saved && saved.getTime() <= latest.getTime()) {
+        console.log(
+            `Skipping ${repo.name} as ${saved.toISOString()} <= ${latest.toISOString()}`,
+        );
+        return;
+    }
+
     console.log(`Syncing mirror for ${repo.name} at: ${path}`);
+    await execAsync(`git remote update`, { cwd: path });
 }
