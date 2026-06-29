@@ -96,10 +96,8 @@ async function syncMirror(
     const latest = new Date(repo.pushed_at);
     const saved = timestamp != null ? new Date(timestamp) : null;
 
+    // Don't sync the mirror if the timestamp hasn't changed.
     if (saved && saved.getTime() <= latest.getTime()) {
-        console.log(
-            `Skipping ${repo.name} as ${saved.toISOString()} <= ${latest.toISOString()}`,
-        );
         return;
     }
 
