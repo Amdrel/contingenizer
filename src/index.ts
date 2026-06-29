@@ -16,8 +16,33 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import args from "command-line-args";
+import { sync } from "./commands/sync.js";
+import { usage } from "./commands/usage.js";
+import { init } from "./commands/init.js";
 
 async function main() {
+    const definitions: args.OptionDefinition[] = [
+        { name: "name", defaultOption: true },
+    ];
+    const command = args(definitions, { stopAtFirstUnknown: true });
+    const argv = command._unknown || [];
+
+    try {
+        switch (command.name) {
+            case "init":
+                await init(argv);
+                break;
+            case "sync":
+                await sync(argv);
+                break;
+            default:
+                await usage(argv);
+        }
+    } catch (err) {
+        console.error(`${err}`);
+        process.exit(1);
+    }
+
     // sync - Take workspace path argument
     // init - Take workspace path argument
     // Read config, get GH credentials
