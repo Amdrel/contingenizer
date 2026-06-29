@@ -96,15 +96,8 @@ async function syncMirror(
     const latest = new Date(repo.pushed_at);
     const saved = timestamp != null ? new Date(timestamp) : null;
 
-    // Don't sync the mirror if the timestamp hasn't changed.
-    if (saved && saved.getTime() <= latest.getTime()) {
-        if (repo.name === "contingenizer") {
-            console.log(`${saved.getTime()} ${latest.getTime()}`);
-        }
-        return;
+    if (saved && saved.getTime() < latest.getTime()) {
+        console.log(`Syncing mirror for ${repo.name} at: ${path}`);
+        await execAsync(`git remote update`, { cwd: path });
     }
-    //testing
-
-    console.log(`Syncing mirror for ${repo.name} at: ${path}`);
-    await execAsync(`git remote update`, { cwd: path });
 }
