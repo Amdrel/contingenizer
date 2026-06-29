@@ -93,10 +93,11 @@ async function syncMirror(
     repo: Repo,
     timestamp: string | null,
 ): Promise<void> {
-    const latest = new Date(repo.pushed_at);
+    const latest = repo.pushed_at != null ? new Date(repo.pushed_at) : null;
     const saved = timestamp != null ? new Date(timestamp) : null;
 
-    if (saved && saved.getTime() < latest.getTime()) {
+    // TODO: Update the PAT stored in the config if it changes.
+    if (latest && saved && saved.getTime() < latest.getTime()) {
         console.log(`Syncing mirror for ${repo.name} at: ${path}`);
         await execAsync(`git remote update`, { cwd: path });
     }

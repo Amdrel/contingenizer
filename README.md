@@ -1,7 +1,8 @@
 # contingenizer
 
-This may turn into something, or it might not. It's just a simple tool.
+Syncs repository mirrors for your GitHub user account. The GitHub API is
+utilized to avoid unnessesary requests.
 
 ## License
 
-This project is licensed under the GPL v3.0 (or later).
+This project is licensed under the GPLv3 license (or later).
