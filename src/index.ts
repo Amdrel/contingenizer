@@ -39,7 +39,11 @@ async function main() {
                 await usage(argv);
         }
     } catch (err) {
-        console.error(`${err}`);
+        if (err instanceof TypeError) {
+            console.error(err.stack ?? `${err}`);
+        } else {
+            console.error(`${err}`);
+        }
         process.exit(1);
     }
 

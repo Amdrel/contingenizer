@@ -18,21 +18,17 @@ import args from "command-line-args";
 import { Octokit } from "@octokit/rest";
 import { read } from "read";
 import { configExists, writeConfig } from "../config.js";
-import { listUserRepositories } from "../github.js";
+import { listRepos } from "../github.js";
 
 /**
  * Initializes the tool in a specific directory with a config file.
  */
-export async function init(argv: string[]): void {
+export async function init(argv: string[]): Promise<void> {
     const definitions: args.OptionDefinition[] = [
-        { name: "username", alias: "u", type: String },
         { name: "destination", alias: "d", type: String },
     ];
     const options = args(definitions, { argv });
 
-    if (!options.username) {
-        throw new Error("Username is required");
-    }
     if (!options.destination) {
         throw new Error("Destination is required");
     }
@@ -58,12 +54,9 @@ export async function init(argv: string[]): void {
 
     // Verify the PAT is valid by fetching the user's repositories.
     const octokit = new Octokit({ auth: token });
-    const repos = await listUserRepositories(octokit, options.username);
+    const repos = await listRepos(octokit);
     console.log(`Found ${repos.length} repositories`);
 
-    await writeConfig(options.destination, {
-        username: options.username,
-        token,
-    });
+    await writeConfig(options.destination, { token });
     console.log("Contingenizer successfully initialized");
 }
