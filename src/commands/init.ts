@@ -37,7 +37,8 @@ export async function init(argv: string[]): void {
         throw new Error("Destination is required");
     }
 
-    if (configExists(options.destination)) {
+    const exists = await configExists(options.destination);
+    if (exists) {
         throw new Error("Contingenizer is already initialized at destination");
     }
 
