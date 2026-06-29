@@ -98,6 +98,9 @@ async function syncMirror(
 
     // Don't sync the mirror if the timestamp hasn't changed.
     if (saved && saved.getTime() <= latest.getTime()) {
+        if (repo.name === "contingenizer") {
+            console.log(`${saved.getTime()} ${latest.getTime()}`);
+        }
         return;
     }
     //testing
