@@ -48,7 +48,7 @@ async function main() {
     // Read config, get GH credentials
     // Call API (bulk if possible) and get last updated against FS timestamp
     // Fetch and mirror sync any repo with newer TS than FS
-    // Update TS in cached file in workspace to NOW()
+    // Update TS in cached file in workspace to pushed_at for EACH repo
 }
 
 if (import.meta.main) {

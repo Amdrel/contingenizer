@@ -18,6 +18,7 @@ import args from "command-line-args";
 import { Octokit } from "@octokit/rest";
 import { read } from "read";
 import { configExists, writeConfig } from "../config.js";
+import { listUserRepositories } from "../github.js";
 
 /**
  * Initializes the tool in a specific directory with a config file.
@@ -59,16 +60,9 @@ export async function init(argv: string[]): void {
     const repos = await listUserRepositories(octokit, options.username);
     console.log(`Found ${repos.length} repositories`);
 
-    await writeConfig(options.destination, { token });
-    console.log("Contingenizer successfully initialized");
-}
-
-/**
- * Get a full list of all of the user's repositories, public and private.
- */
-async function listUserRepositories(octokit: Octokit, username: string) {
-    return octokit.paginate(octokit.repos.listForUser, {
-        username,
-        type: "all",
+    await writeConfig(options.destination, {
+        username: options.username,
+        token,
     });
+    console.log("Contingenizer successfully initialized");
 }

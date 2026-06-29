@@ -19,6 +19,7 @@ import { readFile, writeFile, stat } from "node:fs/promises";
 const CONFIG_NAME = "contingenizer.json";
 
 type RepoConfig = {
+    username: string;
     token: string;
 };
 
