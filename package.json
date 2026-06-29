@@ -1,7 +1,7 @@
 {
     "name": "contingenizer",
     "version": "0.1.0",
-    "description": "",
+    "description": "Syncs repository mirrors from your GitHub user account to a directory.",
     "main": "dist/index.js",
     "scripts": {
         "build": "tsc",
@@ -9,7 +9,7 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
-    "author": "",
+    "author": "Jamie Kuppens <jamie.kuppens@amdrel.net>",
     "license": "GPL-3.0-or-later",
     "packageManager": "pnpm@11.8.0",
     "type": "module",
